@@ -13,5 +13,5 @@ export interface Rover{
   direction: 'L' | 'R' | 'A'; //Direction
   orientation: 'N' | 'E' | 'S' | 'W';
   coordinates: Coordinates;
-  succesTrip: boolean;
+  succesTrip?: boolean;
 }
