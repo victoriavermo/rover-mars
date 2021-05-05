@@ -87,7 +87,7 @@ export class HelpersService {
     const orientacion = rover.orientation;
     if(direccion != 'A'){
       rover.orientation = this.changeOrientation(direccion,orientacion);
-      rover.succesTrip = true;
+      rover.successTrip = true;
       return rover;
     }else{
       const newPosition = this.getNewCoordinateWhereIWantToGo(roverCoord,orientacion);
@@ -95,10 +95,10 @@ export class HelpersService {
       //const valid = this.checkRoverPosition(square,newPosition);
       if(this.checkRoverPosition(square,newPosition)){
         rover.coordinates = newPosition;
-        rover.succesTrip = true;
+        rover.successTrip = true;
         return rover;
       }else{
-        rover.succesTrip = false;
+        rover.successTrip = false;
         return rover;
       }
 
@@ -108,18 +108,17 @@ export class HelpersService {
 
   trip(arrayOrders,rover:Rover,map:Square){
     let i = 0;
-    rover.succesTrip = true;
+    rover.successTrip = true;
 
-    while(rover.succesTrip && i < arrayOrders.length){
+    while(rover.successTrip && i < arrayOrders.length){
       let order = arrayOrders[i];
       console.log('orden',order);
       console.log('coordenadas',rover.coordinates);
       rover = this.checkValidMovement(map,order,rover);
-      //console.log(this.checkValidMovement(map,order,rover));
       i++;
     }
 
-    console.log('Final: '+rover.succesTrip+' Coordenada: ('+rover.coordinates.xWidth+','+rover.coordinates.yHeight+') Orientación: '+ rover.orientation);
+    console.log('Final: '+rover.successTrip+' Coordenada: ('+rover.coordinates.xWidth+','+rover.coordinates.yHeight+') Orientación: '+ rover.orientation);
 
     /*arrayOrders.forEach(order => {
       console.log('orden',order);
@@ -127,6 +126,24 @@ export class HelpersService {
       console.log(this.checkValidMovement(map,order,rover));
     });*/
   }
+
+  async trip2( directions: string[], rover: Rover, square: Square){
+
+    // we use a promise to track all the steps since we add some delay effect
+    let roverUpdated:Rover = rover;
+
+    directions.forEach((direction: 'L' | 'R' | 'A' )=>{
+
+    if(roverUpdated.successTrip ){
+    roverUpdated = this.checkValidMovement(square, direction,roverUpdated  );
+    console.log('rover updated', roverUpdated);
+
+    }else{
+    console.log('ME HE SALIDO DEL CUADRADO, EL ROVER ESTA EN', roverUpdated)
+
+    }
+
+  })}
 
 
 }

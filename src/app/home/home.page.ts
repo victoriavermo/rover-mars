@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HelpersService } from '../services/helpers.service';
-import { Rover, Coordinates, Square } from '../interfaces/interfaces';
+import { Rover, Square } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +17,8 @@ export class HomePage {
     coordinates:{
       xWidth:1,
       yHeight:1,
-    }
+    },
+    successTrip: true
   }
 
   mars:Square={
@@ -25,10 +26,39 @@ export class HomePage {
     height: 10
   }
 
+  width = 100;
+  height = 100;
+  orientacion;
+
   constructor( private helper:HelpersService) {
 
-   helper.trip(this.arrayOrders,this.rover,this.mars);
+   helper.trip(this.arrayOrders2,this.rover,this.mars);
+   this.orientacion = this.rover.orientation;
 
   }
+
+
+  getHeight(){
+    this.mars.height = this.height;
+    return this.height+'px'
+  }
+
+  getWidth(){
+    console.log(this.width);
+    this.mars.width = this.width;
+    return this.width+'px'
+  }
+
+  getLeft(){
+    console.log('Left', ((this.rover.coordinates.xWidth)*10)+16+'px');
+    return ((this.rover.coordinates.xWidth)*10)+8+'px'
+  }
+
+  getBottom(){
+    console.log('Bottom', ((this.rover.coordinates.yHeight)*10)+16+'px');
+    return ((this.rover.coordinates.yHeight)*10)+16+'px'
+  }
+
+
 
 }
